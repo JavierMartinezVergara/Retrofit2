@@ -3,6 +3,8 @@ package com.example.retrofit.ui;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,7 +22,6 @@ import com.example.retrofit.R;
 import com.example.retrofit.api.model.GitHubRepo;
 import com.example.retrofit.api.model.Results;
 import com.example.retrofit.api.service.GitHubClient;
-import com.example.retrofit.ui.adapter.GitHubRepoAdapter;
 
 import java.util.List;
 
@@ -78,7 +79,6 @@ public class MainActivity extends AppCompatActivity
             public void onResponse(Call<Results> call, Response<Results> response) {
                 Results repos = response.body();
 
-                //listView.setAdapter(new GitHubRepoAdapter(MainActivity.this, repos));
             }
 
             @Override
@@ -130,6 +130,20 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+
+            //Paso 2: Crear una nueva transacción
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+            //Paso 3: Crear un nuevo fragmento y añadirlo
+            ItemFragment fragment = new ItemFragment();
+            transaction.add(R.id.list, fragment);
+
+            //Paso 4: Confirmar el cambio
+            transaction.commit();
+
+
 
         } else if (id == R.id.nav_slideshow) {
 
