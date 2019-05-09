@@ -1,14 +1,17 @@
 package com.example.retrofit.api.service;
 
 import com.example.retrofit.api.model.Autentication;
+import com.example.retrofit.api.model.AutenticationJde;
 import com.example.retrofit.api.model.GitHubRepo;
 import com.example.retrofit.api.model.Results;
 
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface GitHubClient {
@@ -23,5 +26,9 @@ public interface GitHubClient {
 
     @GET("/ayvi_test/wms/lgfapi/v9/entity/facility/")
     Call<Results> getFacility(@Header("Authorization") String autenHeader);
+
+
+    @POST("jderest/tokenrequest/")
+    Call<AutenticationJde> getServer(@Body AutenticationJde autenticationJde);
 
 }

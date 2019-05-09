@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.retrofit.R;
 import com.example.retrofit.api.model.Autentication;
+import com.example.retrofit.api.model.AutenticationJde;
 import com.example.retrofit.api.service.GitHubClient;
 
 import retrofit2.Call;
@@ -57,30 +58,38 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Retrofit.Builder builder = new Retrofit.Builder()
-                        .baseUrl("https://ta5.wms.ocs.oraclecloud.com:443/")
+                        //.baseUrl("https://ta5.wms.ocs.oraclecloud.com:443/")
+                        .baseUrl("http://201.149.35.59:98/")
                         .addConverterFactory(GsonConverterFactory.create());
 
                 Retrofit retrofit = builder.build();
 
                 GitHubClient aut = retrofit.create(GitHubClient.class);
-                String base = usernameEditText.getText() + ":" + passwordEditText.getText();
-                String autHeader = "Basic " + android.util.Base64.encodeToString(base.getBytes(),Base64.NO_WRAP);
+                //String base = usernameEditText.getText() + ":" + passwordEditText.getText();
+                //String autHeader = "Basic " + android.util.Base64.encodeToString(base.getBytes(),Base64.NO_WRAP);
 
-                Call<Autentication> call =aut.getActi(autHeader);
+                AutenticationJde jde = new AutenticationJde(usernameEditText.getText().toString(),passwordEditText.getText().toString(), "JPY920", "*ALL", "est");
 
-                call.enqueue(new Callback<Autentication>() {
+
+
+                Call<AutenticationJde> call =aut.getServer(jde);
+
+                call.enqueue(new Callback<AutenticationJde>() {
                     @Override
-                    public void onResponse(Call<Autentication> call, Response<Autentication> response) {
+                    public void onResponse(Call<AutenticationJde> call, Response<AutenticationJde> response) {
                         Context context;
-                        Autentication au;
+                        AutenticationJde au;
                         String men = null;
                         if(response.isSuccessful()){
                                 au= response.body();
 
-                                men = au.getAction_code();
+                                men = au.getUserInfo().getToken();
+
+
 
 
                             context = getApplicationContext();
+                            Toast toast = Toast.makeText(LoginActivity.this, men, Toast.LENGTH_LONG);
                             Intent intent;
                             intent = new Intent(LoginActivity.this, MainActivity.class);
                             intent.putExtra("Mensaje",men);
@@ -116,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<Autentication> call, Throwable t) {
+                    public void onFailure(Call<AutenticationJde> call, Throwable t) {
 
                     }
                 });
