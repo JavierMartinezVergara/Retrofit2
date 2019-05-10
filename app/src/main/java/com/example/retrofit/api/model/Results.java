@@ -7,13 +7,14 @@ import java.util.List;
 
 public class Results {
 
-    @SerializedName("results")
-    @Expose
+    private List<FacilitiesModel> results;
 
+    public Results(List<FacilitiesModel> results) {
+        this.results = results;
+    }
 
-    private List<Facilities> results;
-
-
-
+    public List<FacilitiesModel> getResults() {
+        return results;
+    }
 }
 

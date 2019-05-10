@@ -1,0 +1,34 @@
+{
+  "token": "044O/qXc4n2I/steKCNqxd4pAxi689y8ihST+1a5NOd36Q=MDE5MDA2NzA2MTQ0ODc4NDQ4NDQ5NTA0NlRlc3RlcjE1NTc1MDQxMTk0MDM=",
+  "version": "ZJDE0001",
+  "formActions": [
+    {
+
+      "command": "SetQBEValue",
+      "value": "E",
+      "controlID": "1[50]"
+    },
+    {
+      "command": "SetControlValue",
+      "value": "Al*",
+      "controlID": "58"
+    },
+    {
+      "command": "SetCheckboxValue",
+      "value": "on",
+      "controlID": "62"
+    },
+    {
+      "command": "SetCheckboxValue",
+      "value": "on",
+      "controlID": "63"
+    },
+    {
+      "command": "DoAction",
+      "controlID": "15"
+    }
+  ],
+  "deviceName": "Tester",
+  "formName": "P01012_W01012B",
+  "returnControlIDs": "1[19,20]"
+}
