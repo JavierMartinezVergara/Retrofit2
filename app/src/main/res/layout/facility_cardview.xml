@@ -6,7 +6,8 @@
     android:layout_height="130dp"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="true"
+    >
 
     <!-- Indicador de estado -->
     <View

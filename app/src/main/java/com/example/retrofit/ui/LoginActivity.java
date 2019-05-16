@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                 //String base = usernameEditText.getText() + ":" + passwordEditText.getText();
                 //String autHeader = "Basic " + android.util.Base64.encodeToString(base.getBytes(),Base64.NO_WRAP);
 
-                AutenticationJde jde = new AutenticationJde(usernameEditText.getText().toString(),passwordEditText.getText().toString(), "JPY920", "*ALL", "est");
+                AutenticationJde jde = new AutenticationJde(usernameEditText.getText().toString(),passwordEditText.getText().toString(), "JPY920", "*ALL", "Tester");
 
 
 
@@ -79,34 +79,40 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(Call<AutenticationJde> call, Response<AutenticationJde> response) {
                         Context context;
                         AutenticationJde au;
-                        String men = null;
+                        String men, token = null;
                         if(response.isSuccessful()){
                                 au= response.body();
 
-                                men = au.getUserInfo().getToken();
+                                men = au.getUserInfo().getAlphaname();
+                            token = au.getUserInfo().getToken();
 
 
 
 
                             context = getApplicationContext();
-                            Toast toast = Toast.makeText(LoginActivity.this, men, Toast.LENGTH_LONG);
+                             Toast toast = Toast.makeText(LoginActivity.this, "Bienvenido "+ men, Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER,0,0);
+                            toast.show();
+
+
                             Intent intent;
                             intent = new Intent(LoginActivity.this, MainActivity.class);
-                            intent.putExtra("Mensaje",men);
+                            intent.putExtra("Mensaje",token);
+                            intent.putExtra("Username",men);
+
                             startActivity(intent);
 
 
 
                         }else{
-                            if(response.code()==401){
+
                                 context = getApplicationContext();
                                 Toast toast = Toast.makeText(LoginActivity.this, "Usuario/Password Invalidos!", Toast.LENGTH_LONG);
                                 toast.setGravity(Gravity.CENTER,0,0);
                                 toast.show();
 
 
-                                ;
-                            }
+
                         }
 
 
@@ -118,8 +124,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         int code = response.code();
 
-                        Log.d("LoginActivity", String.valueOf(men));
-                        Log.d("LoginActivity", String.valueOf(code));
+
 
 
                     }

@@ -8,12 +8,15 @@ public class Rowset {
     @SerializedName("rowIndex")
     @Expose
     private Integer rowIndex;
+
     @SerializedName("MOExist")
     @Expose
     private Boolean mOExist;
-    @SerializedName("mnAddressNumber19")
+
+    @SerializedName("mnAddressNumber_19")
     @Expose
     private MnAddressNumber19 mnAddressNumber19;
+
     @SerializedName("sAlphaName_20")
     @Expose
     private SAlphaName20 sAlphaName20;

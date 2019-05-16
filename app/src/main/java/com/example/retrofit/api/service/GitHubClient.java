@@ -3,7 +3,14 @@ package com.example.retrofit.api.service;
 import com.example.retrofit.api.model.Autentication;
 import com.example.retrofit.api.model.AutenticationJde;
 import com.example.retrofit.api.model.GitHubRepo;
+import com.example.retrofit.api.model.P0101;
+import com.example.retrofit.api.model.P0101FormAction;
 import com.example.retrofit.api.model.Results;
+import com.example.retrofit.api.responses.Data_P0101_W01012B;
+import com.example.retrofit.api.responses.FsP01012W01012B;
+import com.example.retrofit.api.responses.GridData;
+import com.example.retrofit.api.responses.Rowset;
+import com.google.gson.JsonObject;
 
 import java.util.List;
 
@@ -31,4 +38,7 @@ public interface GitHubClient {
     @POST("jderest/tokenrequest/")
     Call<AutenticationJde> getServer(@Body AutenticationJde autenticationJde);
 
+
+    @POST("jderest/formservice/")
+    Call<Data_P0101_W01012B> getValores(@Body P0101 p0101);
 }

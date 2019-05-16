@@ -10,7 +10,11 @@ public class P0101 {
         @SerializedName("token")
         @Expose
         private String token;
-        @SerializedName("version")
+        @SerializedName("username")
+        @Expose
+        private String username;
+
+    @SerializedName("version")
         @Expose
         private String version;
         @SerializedName("formActions")
@@ -42,8 +46,9 @@ public class P0101 {
          * @param formActions
          * @param version
          */
-        public P0101(String token, String version, List<P0101FormAction> formActions, String deviceName, String formName, String returnControlIDs) {
+        public P0101(String username,String token, String version, List<P0101FormAction> formActions, String deviceName, String formName, String returnControlIDs) {
             super();
+            this.username= username;
             this.token = token;
             this.version = version;
             this.formActions = formActions;

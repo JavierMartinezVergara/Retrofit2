@@ -1,7 +1,6 @@
 package com.example.retrofit.ui;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,32 +9,29 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.retrofit.R;
-import com.example.retrofit.api.model.FacilitiesModel;
 import com.example.retrofit.api.responses.Rowset;
 
 import java.util.ArrayList;
 import java.util.List;
 
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
-
-
-    private List<Rowset> mItems;
+    private List<Rowset> rowsets;
 
     private Context mContext;
 
     private OnItemClickListener mOnItemClickListener;
 
-    interface OnItemClickListener {
+     interface OnItemClickListener{
 
-        void onItemClick(Rowset clickedAppointment);
+        void onItemClick(Rowset clickrowset);
 
-        void onCancelAppointment(Rowset canceledAppointment);
-
+        void onCancelAppointment(Rowset canceledRowset, int position);
     }
 
-    public MyItemRecyclerViewAdapter(Context context, List<Rowset> items) {
-        mItems = items;
+
+    public RecyclerViewAdapter(Context context, List<Rowset> items){
+        rowsets= items;
         mContext = context;
     }
 
@@ -47,47 +43,57 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         mOnItemClickListener = onItemClickListener;
     }
 
-    public void swapItems(List<Rowset> appointments) {
-        if (appointments == null) {
-            mItems = new ArrayList<>(0);
+
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int i) {
+        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
+        View view = layoutInflater.inflate(R.layout.facility_cardview, parent, false);
+
+        return new ViewHolder(view);
+
+
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerViewAdapter.ViewHolder viewHolder, int i) {
+
+        Rowset rowsetData = rowsets.get(i);
+
+
+        viewHolder.id.setText("AN: " +rowsetData.getMnAddressNumber19().getValue());
+
+        viewHolder.country.setText(rowsetData.getSAlphaName20().getValue());
+
+
+
+
+    }
+
+    @Override
+    public int getItemCount()
+
+    {
+        return rowsets.size();
+    }
+
+
+    public void swapItems(List<Rowset> rows) {
+        if (rows == null) {
+            rowsets = new ArrayList<>(0);
         } else {
-            mItems = appointments;
+            rowsets = rows;
         }
         notifyDataSetChanged();
     }
 
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-        View view = layoutInflater.inflate(R.layout.facility_cardview, parent, false);
-        return new ViewHolder(view);
-    }
 
-
-
-
-    public void onBindViewHolder(ViewHolder holder, int position) {
-
-        Rowset appointment = mItems.get(position);
-
-
-        // estado: se colorea indicador según el estado
-
-        holder.date.setText(appointment.getMnAddressNumber19().getValue());
-
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return mItems.size();
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView date;
-        public TextView service;
-        public TextView doctor;
-        public TextView medicalCenter;
+        public TextView id;
+        public TextView city;
+        public TextView state;
+        public TextView country;
         public Button cancelButton;
         public View statusIndicator;
 
@@ -95,15 +101,18 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
             super(itemView);
 
             statusIndicator = itemView.findViewById(R.id.indicator_appointment_status);
-            date = (TextView) itemView.findViewById(R.id.text_country);
-
+            id =  itemView.findViewById(R.id.text_idfacility);
+            city =  itemView.findViewById(R.id.text_city);
+            state =  itemView.findViewById(R.id.text_state);
+            country =  itemView.findViewById(R.id.text_country);
+            cancelButton =  itemView.findViewById(R.id.button_cancel_appointment);
 
             cancelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        mOnItemClickListener.onCancelAppointment(mItems.get(position));
+                        mOnItemClickListener.onCancelAppointment(rowsets.get(position), position);
                     }
                 }
             });
@@ -114,9 +123,13 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         public void onClick(View v) {
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
-                mOnItemClickListener.onItemClick(mItems.get(position));
+                mOnItemClickListener.onItemClick(rowsets.get(position));
             }
         }
     }
 
+
+
 }
+
+

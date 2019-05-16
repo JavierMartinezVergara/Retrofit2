@@ -37,6 +37,13 @@ public class P0101FormAction {
         this.controlID = controlID;
     }
 
+    public P0101FormAction(String command,  String controlID) {
+        super();
+        this.command = command;
+
+        this.controlID = controlID;
+    }
+
     public String getCommand() {
         return command;
     }
