@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.retrofit.R;
-import com.example.retrofit.api.responses.Rowset;
+import com.example.retrofit.api.responses.DataBrowseF41021.Rowset;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,9 +61,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Rowset rowsetData = rowsets.get(i);
 
 
-        viewHolder.id.setText("AN: " +rowsetData.getMnAddressNumber19().getValue());
+        viewHolder.id.setText("AN: " +rowsetData.getF41021ITM());
 
-        viewHolder.country.setText(rowsetData.getSAlphaName20().getValue());
+        viewHolder.country.setText(rowsetData.getF41021LOCN());
+
+        viewHolder.city.setText(rowsetData.getF41021MCU());
 
 
 

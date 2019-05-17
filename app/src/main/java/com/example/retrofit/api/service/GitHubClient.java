@@ -4,11 +4,14 @@ import com.example.retrofit.api.model.Autentication;
 import com.example.retrofit.api.model.AutenticationJde;
 import com.example.retrofit.api.model.GitHubRepo;
 import com.example.retrofit.api.model.P0101;
-import com.example.retrofit.api.model.P0101FormAction;
+import com.example.retrofit.api.model.F41021.F41021;
 import com.example.retrofit.api.model.Results;
+import com.example.retrofit.api.responses.DataBrowseF41021.ResponseF41021;
 import com.example.retrofit.api.responses.Data_P0101_W01012B;
+
+
 import com.example.retrofit.api.responses.FsP01012W01012B;
-import com.example.retrofit.api.responses.GridData;
+import com.example.retrofit.api.responses.FormGridData;
 import com.example.retrofit.api.responses.Rowset;
 import com.google.gson.JsonObject;
 
@@ -41,4 +44,8 @@ public interface GitHubClient {
 
     @POST("jderest/formservice/")
     Call<Data_P0101_W01012B> getValores(@Body P0101 p0101);
+
+
+    @POST("jderest/v2/dataservice/")
+    Call<ResponseF41021> getTableF41021(@Body F41021 f41021);
 }

@@ -4,7 +4,7 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class GridData {
+public class FormGridData {
 
     @SerializedName("id")
     @Expose
@@ -17,7 +17,7 @@ public class GridData {
      * No args constructor for use in serialization
      *
      */
-    public GridData() {
+    public FormGridData() {
     }
 
 

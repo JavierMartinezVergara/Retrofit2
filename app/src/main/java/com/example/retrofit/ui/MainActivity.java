@@ -17,15 +17,19 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.retrofit.R;
-import com.example.retrofit.api.model.P0101;
-import com.example.retrofit.api.model.P0101FormAction;
-import com.example.retrofit.api.responses.Data_P0101_W01012B;
-import com.example.retrofit.api.responses.Rowset;
+import com.example.retrofit.api.model.F41021.Condition;
+import com.example.retrofit.api.model.F41021.F41021;
+import com.example.retrofit.api.model.F41021.Query;
+import com.example.retrofit.api.model.F41021.Value;
+import com.example.retrofit.api.responses.DataBrowseF41021.ResponseF41021;
+
 import com.example.retrofit.api.service.GitHubClient;
+import com.example.retrofit.api.responses.DataBrowseF41021.Rowset;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -235,6 +239,8 @@ public class MainActivity extends AppCompatActivity
 
         //JsonObject jsonObject = new JsonObject();
 
+        /*Ejemplo para FormActionRequest
+
         ArrayList<P0101FormAction> listFormActions = new ArrayList<P0101FormAction>();
 
         P0101FormAction p0101FormAction0 = new P0101FormAction("SetQBEValue","E","1[50]");
@@ -252,16 +258,41 @@ public class MainActivity extends AppCompatActivity
 
         P0101 p0101 = new P0101("eenriquez",s,"ZJDE0001",listFormActions,"Tester","P01012_W01012B","1[19,20]" );
 
+
+
+        */
         //
+        ArrayList<Condition> conditions = new ArrayList<Condition>();
+        ArrayList<Value> valuesarray = new ArrayList<Value>();
+        Value valuequery = new Value("           1","LITERAL");
+
+
+        valuesarray.add(0,valuequery);
+
+        Condition conditionqueryf41021tablarequest = new Condition(valuesarray,"F41021.MCU", "EQUAL");
+        conditions.add(0,conditionqueryf41021tablarequest);
+
+        Query queryf41021tablarequest = new Query(true,conditions);
+
+        F41021 f41021tablarequest = new F41021(s,"Tester","F41021","table","BROWSE","F41021.ITM|F41021.MCU|F41021.LOCN|F41021.LOTN",queryf41021tablarequest);
 
 
 
-        Call<Data_P0101_W01012B> call = client.getValores(p0101);
 
-        call.enqueue(new Callback<Data_P0101_W01012B>() {
+
+
+
+
+
+
+
+
+        Call<ResponseF41021> call = client.getTableF41021(f41021tablarequest);
+
+        call.enqueue(new Callback<ResponseF41021>() {
             @Override
-            public void onResponse(Call<Data_P0101_W01012B> call, Response<Data_P0101_W01012B> response) {
-                List<Rowset> rowsets = response.body().getFsP01012W01012B().getData().getGridData().getRowset();
+            public void onResponse(Call<ResponseF41021> call, Response<ResponseF41021> response) {
+                List<Rowset> rowsets = response.body().getFsDATABROWSEF41021().getData().getGridData().getRowset();
 
                 if(rowsets.size()>0){
                     showAppointments(rowsets);
@@ -334,7 +365,7 @@ public class MainActivity extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(Call<Data_P0101_W01012B> call, Throwable t) {
+            public void onFailure(Call<ResponseF41021> call, Throwable t) {
                 Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

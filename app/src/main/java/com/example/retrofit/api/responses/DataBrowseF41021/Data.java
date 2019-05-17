@@ -1,5 +1,6 @@
-package com.example.retrofit.api.responses;
+package com.example.retrofit.api.responses.DataBrowseF41021;
 
+import com.example.retrofit.api.responses.FormGridData;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -7,7 +8,7 @@ public class Data {
 
     @SerializedName("gridData")
     @Expose
-    private FormGridData gridData;
+    private GridData gridData;
 
     /**
      * No args constructor for use in serialization
@@ -20,16 +21,16 @@ public class Data {
      *
      * @param gridData
      */
-    public Data(FormGridData gridData) {
+    public Data(GridData gridData) {
         super();
         this.gridData = gridData;
     }
 
-    public FormGridData getGridData() {
+    public GridData getGridData() {
         return gridData;
     }
 
-    public void setGridData(FormGridData gridData) {
+    public void setGridData(GridData gridData) {
         this.gridData = gridData;
     }
 
