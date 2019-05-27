@@ -19,7 +19,7 @@ public class ContractToF41021 {
      */
     public final static String SINGLE_MIME =
             "vnd.android.cursor.item/vnd." + AUTHORITY + GASTO;
-    
+
     public final static String MULTIPLE_MIME =
             "vnd.android.cursor.dir/vnd." + AUTHORITY + GASTO;
     /**
