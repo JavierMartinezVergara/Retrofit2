@@ -94,8 +94,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         public ViewHolder(View itemView) {
             super(itemView);
 
-            statusIndicator = itemView.findViewById(R.id.indicator_appointment_status);
-            date = (TextView) itemView.findViewById(R.id.text_country);
+
 
 
             cancelButton.setOnClickListener(new View.OnClickListener() {

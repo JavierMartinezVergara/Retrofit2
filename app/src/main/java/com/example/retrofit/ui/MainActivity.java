@@ -1,12 +1,13 @@
 package com.example.retrofit.ui;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,8 +18,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.retrofit.R;
@@ -30,10 +29,11 @@ import com.example.retrofit.api.responses.DataBrowseF41021.ResponseF41021;
 
 import com.example.retrofit.api.service.GitHubClient;
 import com.example.retrofit.api.responses.DataBrowseF41021.Rowset;
+import com.example.retrofit.databaseroom.DataEntityF41201;
+import com.example.retrofit.databaseroom.F41021ModelRoom;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,12 +45,16 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
+    List<DataEntityF41201> datostable;
 
+    DataEntityF41201 dataEntityF41201;
     private RecyclerView recyclerView;
 
     private View voidView;
 
     private RecyclerViewAdapter recyclerViewAdaptador;
+
+    F41021ModelRoom f41021ModelRoom;
 
     String sss, as= "";
 
@@ -61,6 +65,16 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
+
+        f41021ModelRoom = ViewModelProviders.of(this).get(F41021ModelRoom.class);
+        f41021ModelRoom.cargaConsulta().observe(this, new Observer<List<DataEntityF41201>>() {
+            @Override
+            public void onChanged(@Nullable List<DataEntityF41201> dataEntityF41201s) {
+
+
+
+            }
+        });
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -210,6 +224,7 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         cargaDatos();
+
     }
 
 
@@ -264,12 +279,12 @@ public class MainActivity extends AppCompatActivity
         //
         ArrayList<Condition> conditions = new ArrayList<Condition>();
         ArrayList<Value> valuesarray = new ArrayList<Value>();
-        Value valuequery = new Value("           1","LITERAL");
+        Value valuequery = new Value("528395","LITERAL");
 
 
         valuesarray.add(0,valuequery);
 
-        Condition conditionqueryf41021tablarequest = new Condition(valuesarray,"F41021.MCU", "EQUAL");
+        Condition conditionqueryf41021tablarequest = new Condition(valuesarray,"F41021.LOTN", "EQUAL");
         conditions.add(0,conditionqueryf41021tablarequest);
 
         Query queryf41021tablarequest = new Query(true,conditions);
@@ -294,46 +309,23 @@ public class MainActivity extends AppCompatActivity
             public void onResponse(Call<ResponseF41021> call, Response<ResponseF41021> response) {
                 List<Rowset> rowsets = response.body().getFsDATABROWSEF41021().getData().getGridData().getRowset();
 
-                if(rowsets.size()>0){
-                    showAppointments(rowsets);
+                for (int i = 0; i < rowsets.size(); i++){
+                    int ITM = rowsets.get(i).getF41021ITM();
+                    String LOTN = rowsets.get(i).getF41021LOTN();
+                    String LOCN = rowsets.get(i).getF41021LOCN();
+                    String MCU = rowsets.get(i).getF41021MCU();
+
+                    DataEntityF41201 databasemodel = new DataEntityF41201(ITM,LOCN,LOTN,MCU);
+
+                    f41021ModelRoom.insert(databasemodel);
                 }
 
 
-                /**for (ListIterator<Rowset> iter = rowsets.listIterator(); iter.hasNext(); ) {
-                 Rowset element = iter.next();
-
-                 sss= element.getSAlphaName20().getValue();
-
-
-                 as = sss.concat(sss+as);
 
 
 
 
 
-
-
-
-
-                 // 1 - can call methods of element
-                 // 2 - can use iter.remove() to remove the current element from the list
-                 // 3 - can use iter.add(...) to insert a new element into the list
-                 //     between element and iter->next()
-                 // 4 - can use iter.set(...) to replace the current element
-
-
-                 }
-
-                 Toast toast2 = Toast.makeText(MainActivity.this, sss, Toast.LENGTH_LONG);
-                 toast2.setGravity(Gravity.CENTER,0,0);
-                 toast2.show();
-
-                 TextView text = findViewById(R.id.texttest);
-
-                 text.setText(as);
-
-
-                 */
 
 
                 if(response.isSuccessful()){

@@ -61,11 +61,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Rowset rowsetData = rowsets.get(i);
 
 
-        viewHolder.id.setText("AN: " +rowsetData.getF41021ITM());
+        viewHolder.mcu.setText( rowsetData.getF41021MCU());
 
-        viewHolder.country.setText(rowsetData.getF41021LOCN());
+        viewHolder.itm.setText(rowsetData.getF41021LOCN());
 
-        viewHolder.city.setText(rowsetData.getF41021MCU());
+        viewHolder.lotn.setText(rowsetData.getF41021LOTN());
 
 
 
@@ -92,9 +92,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView id;
-        public TextView city;
-        public TextView state;
+        public TextView mcu;
+        public TextView lotn;
+        public TextView itm;
         public TextView country;
         public Button cancelButton;
         public View statusIndicator;
@@ -102,13 +102,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public ViewHolder(View itemView) {
             super(itemView);
 
-            statusIndicator = itemView.findViewById(R.id.indicator_appointment_status);
-            id =  itemView.findViewById(R.id.text_idfacility);
-            city =  itemView.findViewById(R.id.text_city);
-            state =  itemView.findViewById(R.id.text_state);
-            country =  itemView.findViewById(R.id.text_country);
-            cancelButton =  itemView.findViewById(R.id.button_cancel_appointment);
 
+            mcu =  itemView.findViewById(R.id.mcu);
+            itm =  itemView.findViewById(R.id.itm);
+            lotn =  itemView.findViewById(R.id.lotn);
+
+
+/*
             cancelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -117,7 +117,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         mOnItemClickListener.onCancelAppointment(rowsets.get(position), position);
                     }
                 }
-            });
+            });*/
             itemView.setOnClickListener(this);
         }
 

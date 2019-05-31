@@ -5,9 +5,11 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
+import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 
 
-@Database(entities = {DataEntityF41201.class}, version = 1)
+@Database(entities = {DataEntityF41201.class}, version = 2)
 public abstract class DataBaseF41021 extends RoomDatabase {
 
 
@@ -15,27 +17,53 @@ public abstract class DataBaseF41021 extends RoomDatabase {
 
     private static DataBaseF41021 INSTANCE;
 
-    static DataBaseF41021 getDataBaseF41021Instancia(Context context){
-        if(INSTANCE ==null){
+    public static synchronized DataBaseF41021 getDataBaseF41021Instance(Context context) {
 
-            INSTANCE = Room.databaseBuilder(context, DataBaseF41021.class, "F41021_db")
-                    .fallbackToDestructiveMigration()
-                    .addCallback(callbackRoom)
-                    .build();
-        }
 
-        return INSTANCE;
+
+                if (INSTANCE == null) {
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), DataBaseF41021.class, "F41021_db")
+                            .fallbackToDestructiveMigration()
+                            .addCallback(callbackRoom)
+                            .build();
+                }
+
+                return INSTANCE;
+
+
+
     }
 
     public static RoomDatabase.Callback callbackRoom = new RoomDatabase.Callback(){
 
-
-
-        public void onOpen (SupportSQLiteDatabase db) {
-
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
         }
 
+
     };
+
+
+
+
+    private static  class PoblarBaseAsynTask extends AsyncTask<Void,Void,Void>{
+
+        private DAO_F41201 daoF41201;
+
+        private PoblarBaseAsynTask(DataBaseF41021 db){
+            daoF41201 = db.dao_f41201();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            //daoF41201.insert(new DataEntityF41201(2,"","",""));
+            return null;
+        }
+    }
+
+
 
 
 }

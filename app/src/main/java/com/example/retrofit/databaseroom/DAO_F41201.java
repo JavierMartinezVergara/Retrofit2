@@ -2,6 +2,8 @@ package com.example.retrofit.databaseroom;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
+import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
 import java.util.List;
@@ -11,8 +13,11 @@ public interface DAO_F41201
 {
 
     @Query("SELECT * FROM table_F41021")
-    public LiveData<List<DataEntityF41201>> cargaConsulta();
+    LiveData<List<DataEntityF41201>> cargaConsulta();
 
-    @Query("DELETE * FROM table_F41021")
-    void deleteTableF41021();
+    @Insert
+    void insert(DataEntityF41201 dataEntityF41201);
+
+    @Delete
+    void delete(DataEntityF41201 dataEntityF41201);
 }
