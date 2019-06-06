@@ -4,5 +4,13 @@
     <color name="colorPrimaryDark">#7FD3FA</color>
     <color name="colorAccent">#98D743</color>
 
-    >
+    <color name="magnitude1">#4A7BA7</color>
+
+
+
+    <color name="textColorEarthquakeDetails">#B4BAC0</color>
+
+    <!-- Text color for the primary location of the earthquake in the list item -->
+    <color name="textColorEarthquakeLocation">#2B3D4D</color>
+    <color name="fondoedittext">#FFFFFF</color>
 </resources>

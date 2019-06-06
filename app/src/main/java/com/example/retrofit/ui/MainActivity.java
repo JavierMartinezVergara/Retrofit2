@@ -1,9 +1,13 @@
 package com.example.retrofit.ui;
 
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,6 +22,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.retrofit.R;
@@ -56,25 +62,87 @@ public class MainActivity extends AppCompatActivity
 
     F41021ModelRoom f41021ModelRoom;
 
-    String sss, as= "";
+    private EditText itm ,mcu;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        itm = findViewById(R.id.ITM);
+        mcu = findViewById(R.id.MCU);
         FloatingActionButton fab = findViewById(R.id.fab);
+        final String textITM , textMCU;
 
+        textITM= itm.getText().toString();
+        textMCU = mcu.getText().toString();
+
+
+
+
+        final Button botonbuscar = findViewById(R.id.buscar);
         f41021ModelRoom = ViewModelProviders.of(this).get(F41021ModelRoom.class);
+        recyclerView = findViewById(R.id.list_contactos);
+
+
+
+
+
+
+        recyclerViewAdaptador = new RecyclerViewAdapter(this, new ArrayList<DataEntityF41201>(0));
+        recyclerView.setAdapter(recyclerViewAdaptador);
+
+
         f41021ModelRoom.cargaConsulta().observe(this, new Observer<List<DataEntityF41201>>() {
+
             @Override
-            public void onChanged(@Nullable List<DataEntityF41201> dataEntityF41201s) {
+            public void onChanged(final List<DataEntityF41201> dataEntityF41201s) {
 
 
 
             }
         });
+
+
+        botonbuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent =  getIntent();
+
+
+                String s = (String) intent.getSerializableExtra("Mensaje");
+                f41021ModelRoom.getData( s,textITM,textMCU);
+
+                List<DataEntityF41201> lista = new ArrayList<>();
+
+
+
+                recyclerViewAdaptador.swapItems(lista);
+
+                recyclerView.setVisibility(View.VISIBLE);
+                voidView.setVisibility(View.GONE);
+
+
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,8 +158,8 @@ public class MainActivity extends AppCompatActivity
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        Intent intent =  getIntent();
-        String s = (String) intent.getSerializableExtra("Username");
+       // Intent intent =  getIntent();
+        //String s = (String) intent.getSerializableExtra("Username");
 
 
 
@@ -106,26 +174,26 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        recyclerView = findViewById(R.id.list_contactos);
+
         voidView = findViewById(R.id.empty_state_container);
-        recyclerViewAdaptador = new RecyclerViewAdapter(this, new ArrayList<Rowset>(0));
+
 
 
 
 
         recyclerViewAdaptador.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(Rowset clickrowset) {
+            public void onItemClick(DataEntityF41201 clickrowset) {
 
             }
 
             @Override
-            public void onCancelAppointment(Rowset canceledRowset, int position) {
+            public void onCancelAppointment(DataEntityF41201 canceledRowset, int position) {
 
             }
         });
 
-        recyclerView.setAdapter(recyclerViewAdaptador);
+
 
 
         SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.refresh_layout);
@@ -133,7 +201,7 @@ public class MainActivity extends AppCompatActivity
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                cargaDatos();
+                //cargaDatos();
             }
         });
 
@@ -207,10 +275,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showAppointments(List<Rowset> serverAppointments) {
-        recyclerViewAdaptador.swapItems(serverAppointments);
-
-        recyclerView.setVisibility(View.VISIBLE);
-        voidView.setVisibility(View.GONE);
 
 
 
@@ -223,11 +287,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        cargaDatos();
+    //    cargaDatos();
 
     }
 
-
+/**
     private void cargaDatos(){
         Intent intent =  getIntent();
         String s = (String) intent.getSerializableExtra("Mensaje");
@@ -275,8 +339,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-        */
-        //
+        *
         ArrayList<Condition> conditions = new ArrayList<Condition>();
         ArrayList<Value> valuesarray = new ArrayList<Value>();
         Value valuequery = new Value("528395","LITERAL");
@@ -362,4 +425,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
+
+ */
 }

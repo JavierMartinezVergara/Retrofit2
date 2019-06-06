@@ -26,8 +26,22 @@ public class F41021ModelRoom extends AndroidViewModel {
         return listLiveDataF41021;
     }
 
+
+
+
     public void insert(DataEntityF41201 data){
 
         f41021Repositorio.insert(data);
     }
+
+
+
+
+    public void getData(String tok, String ITM, String MCU){
+
+        f41021Repositorio.fetchData(tok,ITM,MCU);
+    }
 }
+
+
+

@@ -10,13 +10,14 @@ import android.widget.TextView;
 
 import com.example.retrofit.R;
 import com.example.retrofit.api.responses.DataBrowseF41021.Rowset;
+import com.example.retrofit.databaseroom.DataEntityF41201;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private List<Rowset> rowsets;
+    private List<DataEntityF41201> rowsets;
 
     private Context mContext;
 
@@ -24,13 +25,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
      interface OnItemClickListener{
 
-        void onItemClick(Rowset clickrowset);
+        void onItemClick(DataEntityF41201 clickrowset);
 
-        void onCancelAppointment(Rowset canceledRowset, int position);
+        void onCancelAppointment(DataEntityF41201 canceledRowset, int position);
     }
 
 
-    public RecyclerViewAdapter(Context context, List<Rowset> items){
+    public RecyclerViewAdapter(Context context, List<DataEntityF41201> items){
         rowsets= items;
         mContext = context;
     }
@@ -58,14 +59,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(RecyclerViewAdapter.ViewHolder viewHolder, int i) {
 
-        Rowset rowsetData = rowsets.get(i);
+        DataEntityF41201 rowsetData = rowsets.get(i);
 
 
-        viewHolder.mcu.setText( rowsetData.getF41021MCU());
+        viewHolder.mcu.setText( rowsetData.getDataBf41021MCU());
 
-        viewHolder.itm.setText(rowsetData.getF41021LOCN());
+        viewHolder.itm.setText(rowsetData.getDataBf41021LOCN());
 
-        viewHolder.lotn.setText(rowsetData.getF41021LOTN());
+        viewHolder.lotn.setText(rowsetData.getDataBf41021LOTN());
+
+        viewHolder.locn.setText(rowsetData.getDataBf41021ITM().toString());
+
+        viewHolder.pqor.setText(rowsetData.getDataBf4102PQOH().toString());
 
 
 
@@ -80,7 +85,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
 
-    public void swapItems(List<Rowset> rows) {
+    public void swapItems(List<DataEntityF41201> rows) {
         if (rows == null) {
             rowsets = new ArrayList<>(0);
         } else {
@@ -95,7 +100,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public TextView mcu;
         public TextView lotn;
         public TextView itm;
-        public TextView country;
+        public TextView locn;
+        public TextView pqor;
+
         public Button cancelButton;
         public View statusIndicator;
 
@@ -106,6 +113,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             mcu =  itemView.findViewById(R.id.mcu);
             itm =  itemView.findViewById(R.id.itm);
             lotn =  itemView.findViewById(R.id.lotn);
+            locn =  itemView.findViewById(R.id.locn);
+            pqor = itemView.findViewById(R.id.pqor);
 
 
 /*

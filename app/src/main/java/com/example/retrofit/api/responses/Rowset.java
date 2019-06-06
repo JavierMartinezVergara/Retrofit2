@@ -1,5 +1,7 @@
 package com.example.retrofit.api.responses;
 
+import android.arch.persistence.room.ColumnInfo;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -12,6 +14,8 @@ public class Rowset {
     @SerializedName("MOExist")
     @Expose
     private Boolean mOExist;
+
+
 
     @SerializedName("mnAddressNumber_19")
     @Expose

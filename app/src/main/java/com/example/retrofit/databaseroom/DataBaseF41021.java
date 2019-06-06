@@ -9,7 +9,8 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
 
-@Database(entities = {DataEntityF41201.class}, version = 2)
+
+@Database(entities = {DataEntityF41201.class}, version = 4)
 public abstract class DataBaseF41021 extends RoomDatabase {
 
 

@@ -17,6 +17,11 @@ public class Rowset {
     @SerializedName("F41021_ITM")
     @Expose
     private Integer f41021ITM;
+    @SerializedName("F41021_PQOH")
+    @Expose
+    private Integer f41021PQOH;
+
+
 
     /**
      * No args constructor for use in serialization
@@ -32,12 +37,13 @@ public class Rowset {
      * @param f41021MCU
      * @param f41021LOCN
      */
-    public Rowset(String f41021LOCN, String f41021LOTN, String f41021MCU, Integer f41021ITM) {
+    public Rowset(String f41021LOCN, String f41021LOTN, String f41021MCU, Integer f41021ITM, Integer f41021PQOH) {
         super();
         this.f41021LOCN = f41021LOCN;
         this.f41021LOTN = f41021LOTN;
         this.f41021MCU = f41021MCU;
         this.f41021ITM = f41021ITM;
+        this.f41021PQOH = f41021PQOH;
     }
 
     public String getF41021LOCN() {
@@ -72,4 +78,7 @@ public class Rowset {
         this.f41021ITM = f41021ITM;
     }
 
+    public Integer getF41021PQOH() {
+        return f41021PQOH;
+    }
 }
