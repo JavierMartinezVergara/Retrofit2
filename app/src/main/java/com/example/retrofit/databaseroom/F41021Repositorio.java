@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.os.AsyncTask;
 
+import com.example.retrofit.api.model.AutenticationJde;
 import com.example.retrofit.api.model.F41021.Condition;
 import com.example.retrofit.api.model.F41021.F41021;
 import com.example.retrofit.api.model.F41021.Query;
@@ -43,8 +44,16 @@ public class F41021Repositorio {
         return listLiveDataF41021;
     }
 
+
+
     public void insert (DataEntityF41201 dataEntityF41201){
         new insertAsyncTask(dao).execute(dataEntityF41201);
+
+    }
+
+
+    public void insertUser (AutenticationJde autuser){
+        new insertUserAsyncTask(dao).execute(autuser);
 
     }
 
@@ -63,6 +72,26 @@ public class F41021Repositorio {
         protected Void doInBackground(final DataEntityF41201... dataEntityF41201s) {
 
             dataDAO.insert(dataEntityF41201s[0]);
+
+            return null;
+        }
+    }
+
+
+    private static class insertUserAsyncTask extends AsyncTask<AutenticationJde,Void,Void>{
+
+        private DAO_F41201 dataDAO;
+
+        private insertUserAsyncTask(DAO_F41201 dao) {
+
+
+            this.dataDAO = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final AutenticationJde... autenticationJdes) {
+
+            dataDAO.insertUser(autenticationJdes[0]);
 
             return null;
         }
@@ -161,19 +190,24 @@ public class F41021Repositorio {
 
 
                 if(response.isSuccessful()){
-                    List<Rowset> rowsets = response.body().getFsDATABROWSEF41021().getData().getGridData().getRowset();
+
+                    if(response.body().getFsDATABROWSEF41021()!=null){
+                        List<Rowset> rowsets = response.body().getFsDATABROWSEF41021().getData().getGridData().getRowset();
 
 
-                    for (int i = 0; i < rowsets.size(); i++){
-                        int ITM = rowsets.get(i).getF41021ITM();
-                        String LOTN = rowsets.get(i).getF41021LOTN();
-                        String LOCN = rowsets.get(i).getF41021LOCN();
-                        String MCU = rowsets.get(i).getF41021MCU();
-                        int pqoh = rowsets.get(i).getF41021PQOH();
+                        for (int i = 0; i < rowsets.size(); i++){
+                            int ITM = rowsets.get(i).getF41021ITM();
+                            String LOTN = rowsets.get(i).getF41021LOTN();
+                            String LOCN = rowsets.get(i).getF41021LOCN();
+                            String MCU = rowsets.get(i).getF41021MCU();
+                            int pqoh = rowsets.get(i).getF41021PQOH();
 
-                        DataEntityF41201 databasemodel = new DataEntityF41201(ITM,LOCN,LOTN,MCU,pqoh);
+                            DataEntityF41201 databasemodel = new DataEntityF41201(ITM,LOCN,LOTN,MCU,pqoh);
 
-                        insert(databasemodel);
+                            insert(databasemodel);
+
+                    }
+
 
 
                         //addRecipesToDB(rowsets);

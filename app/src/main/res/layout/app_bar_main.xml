@@ -29,7 +29,9 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
 
-
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <EditText
                 android:layout_width="match_parent"
@@ -37,14 +39,26 @@
                 android:background="@color/fondoedittext"
                 android:textColor="@color/textColorEarthquakeLocation"
                 android:id="@+id/ITM"
+                android:hint="ITM"
+                android:singleLine="true"
                 />
 
-            <EditText
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/fondoedittext"
                 android:textColor="@color/textColorEarthquakeLocation"
-                android:id="@+id/MCU"/>
+                android:id="@+id/MCU"
+                android:hint="MCU"
+                android:singleLine="true"
+            />
+        </android.support.design.widget.TextInputLayout>
 
 
             <Button

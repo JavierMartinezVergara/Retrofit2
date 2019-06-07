@@ -7,6 +7,8 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
+import com.example.retrofit.api.model.AutenticationJde;
+
 import java.util.List;
 
 @Dao
@@ -21,6 +23,18 @@ public interface DAO_F41201
 
     @Delete
     void delete(DataEntityF41201 dataEntityF41201);
+
+
+
+    //autenticacion
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void insertUser(AutenticationJde autenticationJde);
+
+    @Query("SELECT * FROM autenticacion")
+    LiveData<List<AutenticationJde>> consultarCredencialesInternas();
+
+
+
 
 
 }

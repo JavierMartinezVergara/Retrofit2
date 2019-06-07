@@ -8,9 +8,10 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
+import com.example.retrofit.api.model.AutenticationJde;
 
 
-@Database(entities = {DataEntityF41201.class}, version = 4)
+@Database(entities = {DataEntityF41201.class, AutenticationJde.class}, version = 4)
 public abstract class DataBaseF41021 extends RoomDatabase {
 
 

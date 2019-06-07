@@ -78,10 +78,8 @@ public class MainActivity extends AppCompatActivity
         itm = findViewById(R.id.ITM);
         mcu = findViewById(R.id.MCU);
         FloatingActionButton fab = findViewById(R.id.fab);
-        final String textITM , textMCU;
 
-        textITM= itm.getText().toString();
-        textMCU = mcu.getText().toString();
+
 
 
 
@@ -104,35 +102,40 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onChanged(final List<DataEntityF41201> dataEntityF41201s) {
 
+                botonbuscar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String textITM , textMCU;
+
+                        textITM= itm.getText().toString();
+                        textMCU = mcu.getText().toString();
+
+
+                        Intent intent =  getIntent();
+
+
+                        String s = (String) intent.getSerializableExtra("Mensaje");
+                        f41021ModelRoom.getData( s,textITM,textMCU);
+
+                        List<DataEntityF41201> lista = new ArrayList<>();
+
+
+
+                        recyclerViewAdaptador.swapItems(dataEntityF41201s);
+
+                        recyclerView.setVisibility(View.VISIBLE);
+                        voidView.setVisibility(View.GONE);
+
+
+
+                    }
+                });
+
 
 
             }
         });
 
-
-        botonbuscar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent =  getIntent();
-
-
-                String s = (String) intent.getSerializableExtra("Mensaje");
-                f41021ModelRoom.getData( s,textITM,textMCU);
-
-                List<DataEntityF41201> lista = new ArrayList<>();
-
-
-
-                recyclerViewAdaptador.swapItems(lista);
-
-                recyclerView.setVisibility(View.VISIBLE);
-                voidView.setVisibility(View.GONE);
-
-
-
-            }
-        });
 
 
 
